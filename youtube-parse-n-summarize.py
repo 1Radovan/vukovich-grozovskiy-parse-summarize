@@ -30,9 +30,11 @@ def translate_and_add_periods(video_url, output_file):
         video_id = video_url.split('v=')[1]
         transcripts = YouTubeTranscriptApi.get_transcript(video_id, languages=['ru', 'en'])
         subtitles_text = ' '.join(transcript['text'] for transcript in transcripts)
-
-        IAM_TOKEN = 't1.9euelZqMk5CYzc_KmJDLyY7Ljcadx-3rnpWazJ3Hk5WLj5iKysyQlM2Ni4vl8_cUSVFZ-e99Yy82_d3z91R3Tln5731jLzb9zef1656Vmo2JloqPm5eRlMuPnpqKk8-P7_zF656Vmo2JloqPm5eRlMuPnpqKk8-P.zohHGUCacQYCAcsNep5AoAPNm7DdBiWwnpIY3jidyoOoRN-7i3XUeFwSbep7tthGz9woKTZihbfWP-HFY6h1AA'
-        folder_id = 'b1grp573mgkcni8josbq'
+        
+        # Инструкция по их получению находится в другом файле
+        
+        IAM_TOKEN = 'YOUR_IAM_TOKEN'
+        folder_id = 'YOUR_FOLDER_ID'
         target_language = 'en'
         chunk_size = 10000
 
