@@ -30,11 +30,9 @@ def translate_and_add_periods(video_url, output_file):
         video_id = video_url.split('v=')[1]
         transcripts = YouTubeTranscriptApi.get_transcript(video_id, languages=['ru', 'en'])
         subtitles_text = ' '.join(transcript['text'] for transcript in transcripts)
-        
-        # Инструкция по их получению находится в другом файле
-        
-        IAM_TOKEN = 'YOUR_IAM_TOKEN'
-        folder_id = 'YOUR_FOLDER_ID'
+
+        IAM_TOKEN = 't1.9euelZqQmZDPi4-Yxpyax42XnpuZz-3rnpWazJ3Hk5WLj5iKysyQlM2Ni4vl8_dQMk1Z-e9MDh8__d3z9xBhSln570wOHz_9zef1656Vmo_LxpeVi8yNnM_GyJvJl86d7_zF656Vmo_LxpeVi8yNnM_GyJvJl86d.39Y_BkuGfMJ5BjguYUFfdMENUQRLTCr-K7Hugt_qBmNjRr4-hKTcPCxc-F6Izhqtoe2nm1tEWMUHbR4BxMhBCg'
+        folder_id = 'b1grp573mgkcni8josbq'
         target_language = 'en'
         chunk_size = 10000
 
@@ -128,7 +126,7 @@ if __name__ == "__main__":
 
     summarized_text = summarize_text(initial_text)
 
-    with open('summarized_output.txt', 'w', encoding='utf-8') as output:
+    with open("summarized_output.txt", 'w', encoding='utf-8') as output:
         output.write(summarized_text)
 
     print(f"Итоговый текст с субтитрами и саммари сохранен в файл: summarized_output.txt")
