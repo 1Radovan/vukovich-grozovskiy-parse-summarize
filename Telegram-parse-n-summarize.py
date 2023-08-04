@@ -5,8 +5,8 @@ import requests
 import tensorflow as tf
 from transformers import TFBartForConditionalGeneration, BartTokenizer
 
-IAM_TOKEN = 't1.9euelZqQmZDPi4-Yxpyax42XnpuZz-3rnpWazJ3Hk5WLj5iKysyQlM2Ni4vl8_dQMk1Z-e9MDh8__d3z9xBhSln570wOHz_9zef1656Vmo_LxpeVi8yNnM_GyJvJl86d7_zF656Vmo_LxpeVi8yNnM_GyJvJl86d.39Y_BkuGfMJ5BjguYUFfdMENUQRLTCr-K7Hugt_qBmNjRr4-hKTcPCxc-F6Izhqtoe2nm1tEWMUHbR4BxMhBCg'
-folder_id = 'b1grp573mgkcni8josbq'
+IAM_TOKEN = '' #Your token
+folder_id = '' #Your folder_id
 target_language = 'en'
 texts = []
 
@@ -70,8 +70,8 @@ async def summarize_text(initial_text):
 
 async def main():
     # Telegram API credentials
-    api_id = 20363802  # Replace with your API ID
-    api_hash = 'e1fdc544a4dbdd46af7de29dc1de7cb0'  # Replace with your API Hash
+    api_id = 111111  # Replace with your API ID
+    api_hash = ''  # Replace with your API Hash
 
     # Telegram channel username or chat ID
     channel_name = '@OilGasGame'  # Replace with the channel username or chat ID
