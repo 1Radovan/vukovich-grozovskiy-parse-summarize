@@ -5,7 +5,7 @@ import requests
 import tensorflow as tf
 from transformers import TFBartForConditionalGeneration, BartTokenizer
 
-IAM_TOKEN = 't1.9euelZqMk5CYzc_KmJDLyY7Ljcadx-3rnpWazJ3Hk5WLj5iKysyQlM2Ni4vl8_djA1JZ-e82XCkv_d3z9yMyT1n57zZcKS_9zef1656Vmsqdi46NjpOXls7Hx4zKnpPO7_zF656Vmsqdi46NjpOXls7Hx4zKnpPO.4w_hjBZZEQMDK3YwGcuxe3Bw2z_XMiFMBC6sOsU_LQbRBSJIjMvz_bQ2MFyVsvsOzVc_wu2Kz5kx5EJfBm8QBA'
+IAM_TOKEN = 't1.9euelZqQmZDPi4-Yxpyax42XnpuZz-3rnpWazJ3Hk5WLj5iKysyQlM2Ni4vl8_dQMk1Z-e9MDh8__d3z9xBhSln570wOHz_9zef1656Vmo_LxpeVi8yNnM_GyJvJl86d7_zF656Vmo_LxpeVi8yNnM_GyJvJl86d.39Y_BkuGfMJ5BjguYUFfdMENUQRLTCr-K7Hugt_qBmNjRr4-hKTcPCxc-F6Izhqtoe2nm1tEWMUHbR4BxMhBCg'
 folder_id = 'b1grp573mgkcni8josbq'
 target_language = 'en'
 texts = []
@@ -70,24 +70,24 @@ async def summarize_text(initial_text):
 
 async def main():
     # Telegram API credentials
-    api_id = 27582586  # Replace with your API ID
-    api_hash = '8f582dcc191f7d6c89db6c93a7776059'  # Replace with your API Hash
+    api_id = 20363802  # Replace with your API ID
+    api_hash = 'e1fdc544a4dbdd46af7de29dc1de7cb0'  # Replace with your API Hash
 
     # Telegram channel username or chat ID
-    channel_name = 'your_channel_name'  # Replace with the channel username or chat ID
+    channel_name = '@OilGasGame'  # Replace with the channel username or chat ID
 
     client = telethon.TelegramClient('session_name', api_id, api_hash)
 
     try:
         await client.start()
 
-        if not client.is_user_authorized():
-            print("Client not authorized. Please check your API credentials.")
-            return
-
         if not client.is_connected():
             print("Client not connected. Attempting to connect...")
             await client.connect()
+
+        if not client.is_user_authorized():
+            print("Client not authorized. Please check your API credentials.")
+            return
 
         print("Client connected and authorized.")
 
@@ -95,7 +95,7 @@ async def main():
 
         # Specify the start and end date of the message period you want to scrape.
         # For example, from 1st July to 31st July 2023.
-        start_date = datetime(2023, 7, 1).replace(tzinfo=timezone.utc)
+        start_date = datetime(2023, 7, 15).replace(tzinfo=timezone.utc)
         end_date = datetime(2023, 7, 31).replace(tzinfo=timezone.utc)
 
         with open('Scraped.txt', 'a', encoding='utf-8') as txt_file:
@@ -107,16 +107,20 @@ async def main():
                         chunk = message_text[i:i + 10000]
                         translated_text = await translate_text(chunk)
                         if translated_text:
+                            texts.append(translated_text)
                             txt_file.write(translated_text + '\n')
 
-        with open('Scraped.txt', 'r', encoding='utf-8') as input_file:
-            initial_text = input_file.read()
+        # Combine the translated texts into a single text
+        combined_text = '\n'.join(texts)
 
         # Generate the summary
-        summarized_text = await summarize_text(initial_text)
+        summarized_text = await summarize_text(combined_text)
 
-        with open('output.txt', 'w', encoding='utf-8') as output_file:
-            output_file.write(summarized_text)
+        with open("scraped_en.txt", 'w', encoding='utf-8') as txt_file:
+            txt_file.write(combined_text)
+
+        with open("summary.txt", 'w', encoding='utf-8') as summary_file:
+            summary_file.write(summarized_text)
 
     except telethon.errors.rpcerrorlist.AuthKeyUnregisteredError:
         print("AuthKeyUnregisteredError: The key is not registered in the system.")
