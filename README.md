@@ -1,2 +1,2 @@
 # vukovich-grozovskiy-parse-summarize (Python 3.11.3)
-# Cкрипты в данном репозиторие представляют из себя parser постов Telegram канала и субтитров из видео на YouTube. Дальнейший текст анализруется в summarizer и выдает summary текста. Перед использованием убедитесь в том, что у вас установлены все нужные библиотеки.
+# The scripts in this repository are parsers of Telegram channel posts and subtitles from YouTube videos. The uploaded text is analyzed, and a text summary is generated on its basis. Before usage, make sure that you have all the necessary libraries installed
