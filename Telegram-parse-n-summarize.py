@@ -11,6 +11,7 @@ target_language = 'en'
 texts = []
 
 async def translate_text(text):
+    """Translates the messages to English"""
     body = {
         "targetLanguageCode": target_language,
         "texts": [text],
@@ -38,7 +39,8 @@ async def translate_text(text):
         return None
 
 async def summarize_text(initial_text):
-    # Check if CUDA GPU is available and enable memory growth
+     """Summarizing the text"""
+    # Checking if CUDA GPU is available and enable memory growth
     gpus = tf.config.experimental.list_physical_devices('GPU')
     if gpus:
         try:
@@ -46,15 +48,15 @@ async def summarize_text(initial_text):
         except RuntimeError as e:
             print(e)
 
-    # Load pre-trained BART model and tokenizer
+    # Loading pre-trained BART model and tokenizer
     model_name = "facebook/bart-large-cnn"
     tokenizer = BartTokenizer.from_pretrained(model_name)
     model = TFBartForConditionalGeneration.from_pretrained(model_name)
 
-    # Tokenize the input text
+    # Tokenizing the input text
     inputs = tokenizer.encode("summarize: " + initial_text, return_tensors="tf", max_length=1024, truncation=True)
 
-    # Generate the summary
+    # Generating the summary
     summary_ids = model.generate(
         inputs,
         max_length=512,
@@ -64,7 +66,7 @@ async def summarize_text(initial_text):
         num_return_sequences=10
     )
 
-    # Decode the summary tokens back to text
+    # Decoding the summary tokens back to text
     summarized_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
     return summarized_text
 
@@ -102,7 +104,7 @@ async def main():
             async for message in client.iter_messages(channel):
                 if start_date <= message.date <= end_date:
                     message_text = message.message
-                    # Split the message into smaller parts for translation
+                    # Splitting the message into smaller parts for translation
                     for i in range(0, len(message_text), 10000):
                         chunk = message_text[i:i + 10000]
                         translated_text = await translate_text(chunk)
@@ -110,10 +112,10 @@ async def main():
                             texts.append(translated_text)
                             txt_file.write(translated_text + '\n')
 
-        # Combine the translated texts into a single text
+        # Combining the translated texts into a single text
         combined_text = '\n'.join(texts)
 
-        # Generate the summary
+        # Generating the summary
         summarized_text = await summarize_text(combined_text)
 
         with open("scraped_en.txt", 'w', encoding='utf-8') as txt_file:
